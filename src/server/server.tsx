@@ -6,7 +6,7 @@ const HOSTNAME: string = process.env.HOSTNAME || 'localhost';
 
 const server = express();
 
-console.log('IS_Production',IS_PRODUCTION);
+console.log('IS_Production', IS_PRODUCTION);
 
 if (!IS_PRODUCTION) {
     const webpackDevMiddleware = require("webpack-dev-middleware");
@@ -37,9 +37,9 @@ server.get('*', (req: express.Request, res: express.Response) => {
         </head>
         <body>
             <div id="root"></div>
+            <script src="/vendor.js"></script>
+            <script src="/client.js"></script>
         </body>
-        <script defer async src="/vendor.js"></script>
-        <script defer async src="/client.js"></script>
         </html>`);
     res.end();
 });
