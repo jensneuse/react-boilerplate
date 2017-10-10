@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.config.js",
-    "build-server": "webpack --progress --config webpack.server.config.js",
-    "build-client": "webpack --progress --config webpack.client.config.js",
-    "server": "node ./dist/server/server.js",
+    "build-server": "set BABEL_ENV=server && webpack --progress --config webpack.server.config.js",
+    "build-client": "set BABEL_ENV=client && webpack --progress --config webpack.client.config.js",
+    "build": "npm run build-server && npm run build-client",
+    "serve": "set BABEL_ENV=client && node ./dist/server/server.js",
+    "build-serve": "npm run build && npm run serve",
     "generate-sw": "workbox generate:sw"
   },
   "repository": {
@@ -26,20 +27,32 @@
     "@types/node": "^8.0.33",
     "@types/react": "^16.0.10",
     "@types/react-dom": "^16.0.1",
+    "@types/react-router-dom": "^4.0.8",
     "express": "^4.16.1",
     "express-static-gzip": "^0.3.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-async-component": "^1.0.1",
+    "react-dom": "^16.0.0",
+    "react-router-dom": "^4.2.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "^3.2.3",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-dynamic-import-node": "^1.1.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-preset-env": "^1.6.0",
     "clean-webpack-plugin": "^0.1.17",
+    "compression-webpack-plugin": "^1.0.1",
+    "extract-text-webpack-plugin": "^3.0.1",
     "react-hot-loader": "^3.0.0-beta.6",
     "source-map-loader": "^0.2.2",
     "typescript": "^2.5.3",
     "typings": "^2.1.1",
     "webpack": "^3.6.0",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-middleware": "^1.12.0",
-    "webpack-hot-middleware": "^2.19.1"
+    "webpack-hot-middleware": "^2.19.1",
+    "webpack-stats-plugin": "^0.1.5"
   }
 }

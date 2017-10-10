@@ -1,15 +1,22 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import {
+    BrowserRouter as Router,
+} from "react-router-dom"
+import Routes from "../common/routes"
 
-import {Hello} from "./components/Hello";
 
-ReactDOM.render(
-    <Hello  compiler="TypeScript" framework="React"/>,
-    document.getElementById("root")
+const App = () => (
+    <Router>
+        <Routes/>
+    </Router>
 );
+
+ReactDOM.render(App(), document.getElementById("root"));
 
 console.log('App rendered');
 
+/*
 if(navigator.serviceWorker) {
     navigator.serviceWorker.register('/sw.js')
         .catch(function(err) {
@@ -20,4 +27,4 @@ if(navigator.serviceWorker) {
         });
 } else {
     console.log('!navigator.serviceWorker');
-}
+}*/

@@ -1,0 +1,10 @@
+{
+  "env": {
+    "client":{
+      "plugins": []
+    },
+    "server":{
+      "plugins": []
+    }
+  }
+}
