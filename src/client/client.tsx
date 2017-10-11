@@ -3,18 +3,31 @@ import * as ReactDOM from "react-dom";
 import {
     BrowserRouter as Router,
 } from "react-router-dom"
+import { AsyncComponentProvider, createAsyncContext } from 'react-async-component'
+import asyncBootstrapper from 'react-async-bootstrapper'
 import Routes from "../common/routes"
 
+declare let window: {
+    __ASYNC__: any
+};
 
-const App = () => (
-    <Router>
-        <Routes/>
-    </Router>
+const asyncState = window.__ASYNC__;
+
+const App = (
+    <AsyncComponentProvider rehydrateState={asyncState}>
+        <Router>
+            <Routes/>
+        </Router>
+    </AsyncComponentProvider>
 );
 
-ReactDOM.render(App(), document.getElementById("root"));
+asyncBootstrapper(App).then(()=>{
+    console.log('client bootstrapped');
 
-console.log('App rendered');
+    ReactDOM.render(App, document.getElementById("root"));
+    console.log('App rendered');
+});
+
 
 /*
 if(navigator.serviceWorker) {

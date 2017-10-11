@@ -1,4 +1,5 @@
 import * as express from 'express'
+import render from './serverRender'
 
 const IS_PRODUCTION: boolean = process.env.NODE_ENV === 'production';
 const PORT: number = parseInt(process.env.PORT) || 8081;
@@ -25,23 +26,13 @@ if (!IS_PRODUCTION) {
     server.use("/", express.static("dist/client/"));
 }
 
+server.use('/icon.png',express.static('dist/client/icon.png'));
+server.use('/favicon.ico',express.static('dist/client/icon.png'));
 server.use("/sw.js", express.static("dist/client/sw.js"));
 server.use("/workbox-sw.prod.v2.1.0.js", express.static("dist/client/workbox-sw.prod.v2.1.0.js"));
 
 server.get('*', (req: express.Request, res: express.Response) => {
-    res.status(200);
-    res.send(`<!DOCTYPE html>
-        <html>
-        <head>
-            <title>T-Online.ts</title>
-        </head>
-        <body>
-            <div id="root"></div>
-            <script src="/vendor.js"></script>
-            <script src="/client.js"></script>
-        </body>
-        </html>`);
-    res.end();
+    render(req,res);
 });
 
 server.listen(PORT, HOSTNAME, () => {
