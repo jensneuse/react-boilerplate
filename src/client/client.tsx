@@ -5,15 +5,17 @@ import {
 } from "react-router-dom"
 import { AsyncComponentProvider, createAsyncContext } from 'react-async-component'
 import asyncBootstrapper from 'react-async-bootstrapper'
-import Routes from "../common/routes"
+import _Routes from "../common/routes"
 
 declare let window: {
     __ASYNC__: any
 };
 
+declare let System: any;
+
 const asyncState = window.__ASYNC__;
 
-const App = (
+const render = (Routes: React.ComponentClass) => (
     <AsyncComponentProvider rehydrateState={asyncState}>
         <Router>
             <Routes/>
@@ -21,13 +23,25 @@ const App = (
     </AsyncComponentProvider>
 );
 
+const App = render(_Routes);
+
 asyncBootstrapper(App).then(()=>{
     console.log('client bootstrapped');
-
     ReactDOM.render(App, document.getElementById("root"));
     console.log('App rendered');
 });
 
+if (module.hot) {
+    console.log('hot reload active');
+    module.hot.accept('../common/routes', () => {
+        System.import('../common/routes').then((module: any) => {
+            console.log('hot system import',module);
+            ReactDOM.render(render(module.default), document.getElementById("root"));
+        });
+    });
+} else {
+    console.log('no hot reload :(');
+}
 
 /*
 if(navigator.serviceWorker) {

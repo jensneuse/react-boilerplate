@@ -8,7 +8,7 @@ const pathsToClean = [
     'dist/server'
 ];
 
-var nodeModules = {};
+let nodeModules = {};
 fs.readdirSync('node_modules')
     .filter(function (x) {
         return ['.bin'].indexOf(x) === -1;
@@ -16,6 +16,33 @@ fs.readdirSync('node_modules')
     .forEach(function (mod) {
         nodeModules[mod] = 'commonjs ' + mod;
     });
+
+const loaders = IS_PRODUCTION ?
+    [
+        {
+            loader: 'babel-loader',
+            options: {
+                presets: ['env']
+            }
+        },
+        {
+            loader: 'awesome-typescript-loader'
+        }
+    ] :
+    [
+        {
+            loader: 'react-hot-loader/webpack'
+        },
+        {
+            loader: 'babel-loader',
+            options: {
+                presets: ['env']
+            }
+        },
+        {
+            loader: 'awesome-typescript-loader'
+        }
+    ];
 
 module.exports = {
     entry: "./src/server/server.tsx",
@@ -45,14 +72,7 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 exclude: /(node_modules|bower_components)/,
-                use: [
-                    {
-                        loader: 'react-hot-loader/webpack'
-                    },
-                    {
-                        loader: 'awesome-typescript-loader'
-                    }
-                ]
+                use: loaders
             },
 
             // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
