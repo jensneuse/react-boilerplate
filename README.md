@@ -3,16 +3,20 @@
 This repository works as a blueprint for react web projects.
 
 **Features**:
+
+- Typescript
 - hot module replacement / Live reload
 - server side rendering
 - code splitting
 - helmet
 
 **Requirements**
+
 - node v6.x
 - npm 3.x
 
 **Install**
+
 run 'npm install'
 
 **Developing**
