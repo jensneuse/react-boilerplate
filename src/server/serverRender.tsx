@@ -5,6 +5,7 @@ import {renderToString} from "react-dom/server"
 import {StaticRouter as Router} from 'react-router-dom'
 import asyncBootstrapper from 'react-async-bootstrapper'
 import Routes from '../common/routes'
+import Helmet from "react-helmet";
 
 
 export default (req: express.Request, res: express.Response) => {
@@ -27,15 +28,18 @@ export default (req: express.Request, res: express.Response) => {
 
         const applicationHTML = renderToString(App);
         const asyncState = JSON.stringify(asyncContext.getState());
+        const helmet = Helmet.renderStatic();
 
         res.status(200);
         res.send(`<!DOCTYPE html>
-        <html>
+        <html ${helmet.htmlAttributes.toString()}>
         <head>
-            <title>T-Online.ts</title>
+            ${helmet.title.toString()}
+            ${helmet.meta.toString()}
+            ${helmet.link.toString()}
             <link rel="apple-touch-icon" sizes="57x57" href="/icon.png" />
         </head>
-        <body>
+        <body ${helmet.bodyAttributes.toString()}>
             <div id="root">${applicationHTML}</div>
             <script type="text/javascript">
                 window.__ASYNC__ = ${asyncState}

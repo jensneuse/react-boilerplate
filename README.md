@@ -6,6 +6,7 @@ This repository works as a blueprint for react web projects.
 - hot module replacement / Live reload
 - server side rendering
 - code splitting
+- helmet
 
 **Requirements**
 - node v6.x

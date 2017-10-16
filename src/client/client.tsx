@@ -1,5 +1,5 @@
 import * as React from "react";
-import * as ReactDOM from "react-dom";
+import {hydrate} from "react-dom";
 import {
     BrowserRouter as Router,
 } from "react-router-dom"
@@ -27,7 +27,7 @@ const App = render(_Routes);
 
 asyncBootstrapper(App).then(()=>{
     console.log('client bootstrapped');
-    ReactDOM.render(App, document.getElementById("root"));
+    hydrate(App, document.getElementById("root"));
     console.log('App rendered');
 });
 
@@ -36,7 +36,7 @@ if (module.hot) {
     module.hot.accept('../common/routes', () => {
         System.import('../common/routes').then((module: any) => {
             console.log('hot system import',module);
-            ReactDOM.render(render(module.default), document.getElementById("root"));
+            hydrate(render(module.default), document.getElementById("root"));
         });
     });
 } else {
