@@ -1,4 +1,6 @@
 {
+  "plugins": [
+  ],
   "env": {
     "client":{
       "plugins": []

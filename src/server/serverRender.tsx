@@ -1,4 +1,3 @@
-import * as express from 'express'
 import {AsyncComponentProvider, createAsyncContext} from 'react-async-component'
 import * as React from "react";
 import {renderToString} from "react-dom/server"
@@ -7,31 +6,26 @@ import asyncBootstrapper from 'react-async-bootstrapper'
 import Routes from '../common/routes'
 import Helmet from "react-helmet";
 
-
-export default (req: express.Request, res: express.Response) => {
-
-    console.log('begin rendering',req.url);
+export default function(url: string) : Promise<string> {
 
     const asyncContext = createAsyncContext();
     let routerContext = {};
 
     const App = (
         <AsyncComponentProvider asyncContext={asyncContext}>
-            <Router location={req.url} context={routerContext}>
+            <Router location={url} context={routerContext}>
                 <Routes/>
             </Router>
         </AsyncComponentProvider>
     );
 
-    asyncBootstrapper(App).then(() => {
-        console.log('server bootstrapped',routerContext);
+    return asyncBootstrapper(App).then(() => {
 
         const applicationHTML = renderToString(App);
         const asyncState = JSON.stringify(asyncContext.getState());
         const helmet = Helmet.renderStatic();
 
-        res.status(200);
-        res.send(`<!DOCTYPE html>
+        return `<!DOCTYPE html>
         <html ${helmet.htmlAttributes.toString()}>
         <head>
             ${helmet.title.toString()}
@@ -47,13 +41,7 @@ export default (req: express.Request, res: express.Response) => {
             <script type="text/javascript" src="/vendor.js"></script>
             <script type="text/javascript" src="/client.js"></script>
         </body>
-        </html>`
-        );
+        </html>`;
 
-        res.end();
-    }).catch((e: Error) => {
-        console.log('bootstrapping failed', e);
-        res.status(500);
-        res.end();
     });
 }

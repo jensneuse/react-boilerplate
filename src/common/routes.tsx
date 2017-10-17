@@ -7,6 +7,8 @@ import Home from "../common/components/Home"
 
 import About from "../common/components/AsyncAbout"
 import Stuff from "../common/components/AsyncStuff"
+import Benchmark from "../common/components/Benchmark/BenchmarkRoute"
+
 import Helmet from "react-helmet";
 
 class Routes extends React.Component<{},{}> {
@@ -17,7 +19,8 @@ class Routes extends React.Component<{},{}> {
             </Helmet>,
             <Route key="home" exact path="/" component={Home} />,
             <Route key="about" exact path="/about" component={About}/>,
-            <Route key="stuff" exact path="/stuff" component={Stuff}/>
+            <Route key="stuff" exact path="/stuff" component={Stuff}/>,
+            <Route key="benchmark" exact path="/benchmark" component={Benchmark} />
         ])
     }
 }

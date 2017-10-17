@@ -32,7 +32,14 @@ server.use("/sw.js", express.static("dist/client/sw.js"));
 server.use("/workbox-sw.prod.v2.1.0.js", express.static("dist/client/workbox-sw.prod.v2.1.0.js"));
 
 server.get('*', (req: express.Request, res: express.Response) => {
-    render(req,res);
+    render(req.url).then((html: string) => {
+        res.status(200);
+        res.end(html);
+    }).catch((e: Error)=> {
+        console.log('Error rendering: ',e);
+        res.status(500);
+        res.end();
+    });
 });
 
 server.listen(PORT, HOSTNAME, () => {
