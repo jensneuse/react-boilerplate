@@ -1,0 +1,3 @@
+pipeBuild {
+    author = 'Jens Neuse'
+}
