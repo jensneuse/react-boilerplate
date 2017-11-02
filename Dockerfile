@@ -1,6 +1,11 @@
-FROM node:9.0.0-alpine
+FROM node:9.0.0-alpine AS builder
 
 ARG NODE_ENV=production
+
+RUN mkdir src
+RUN cp . ./src
+
+WORKDIR ./src
 
 RUN npm install
 RUN npm run build-client
