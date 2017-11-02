@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-server": "set BABEL_ENV=server && webpack --progress --config webpack.server.config.js",
-    "build-client": "set BABEL_ENV=client && webpack --progress --config webpack.client.config.js",
+    "build-server": "webpack --progress --config webpack.server.config.js",
+    "build-client": "webpack --progress --config webpack.client.config.js",
     "build-benchmark": "webpack --progress --config webpack.benchmark.config.js",
     "benchmark": "node ./dist/benchmark/benchmark.js",
     "build": "npm run build-server && npm run build-client",
