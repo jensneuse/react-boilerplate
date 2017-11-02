@@ -10,7 +10,7 @@
     "build-benchmark": "webpack --progress --config webpack.benchmark.config.js",
     "benchmark": "node ./dist/benchmark/benchmark.js",
     "build": "npm run build-server && npm run build-client",
-    "serve": "set BABEL_ENV=client && node ./dist/server/server.js",
+    "serve": "node ./dist/server/server.js",
     "build-serve": "npm run build && npm run serve",
     "generate-sw": "workbox generate:sw"
   },
