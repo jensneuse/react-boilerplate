@@ -7,7 +7,7 @@ ARG NODE_ENV=production
 COPY . .
 
 RUN npm install
-RUN npm run build-client
-RUN npm run build-server
+RUN webpack --config webpack.client.config
+RUN webpack --config webpack.server.config
 
 ENTRYPOINT ["/bin/sh"]
