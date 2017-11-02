@@ -1,6 +1,6 @@
 FROM node:alpine
 
-RUN npm instal webpack -g
+RUN npm install webpack -g
 
 ARG NODE_ENV=production
 
