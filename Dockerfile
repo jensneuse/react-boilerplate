@@ -1,4 +1,6 @@
-FROM jmfirth/webpack:8-slim
+FROM node:alpine
+
+RUN npm instal webpack -g
 
 ARG NODE_ENV=production
 
