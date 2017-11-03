@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require("webpack");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+/*
 const CompressionPlugin = require("compression-webpack-plugin");
+*/
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
@@ -44,13 +45,13 @@ let plugins = [
         minimize: true,
         debug: false
     }),
-    new CompressionPlugin({
+    /*new CompressionPlugin({
         asset: "[path].gz[query]",
         algorithm: "gzip",
         test: /\.(js|html|css)$/,
         threshold: 0,
         minRatio: 0.8
-    })
+    })*/
 ];
 
 if (IS_PRODUCTION) {

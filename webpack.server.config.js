@@ -1,12 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const webpack = require("webpack");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
-
-const pathsToClean = [
-    'dist/server'
-];
 
 let nodeModules = {};
 fs.readdirSync('node_modules')
@@ -59,12 +54,7 @@ module.exports = {
         // Add '.ts' and '.tsx' as resolvable extensions.
         extensions: [".ts", ".tsx", ".js", ".json"]
     },
-    plugins: [
-        new CleanWebpackPlugin(pathsToClean, {
-            verbose: true,
-            dry: false
-        })
-    ],
+    plugins: [],
     module: {
         rules: [
             // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
