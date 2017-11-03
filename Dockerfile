@@ -3,12 +3,13 @@ FROM node:alpine as build
 RUN npm install webpack -g
 RUN npm link webpack
 
-# If NODE_ENV != production, npm install adds devDependencies (neccessary to build) too.
-ARG NODE_ENV=build
+ARG NODE_ENV=production
 
 COPY . .
 
-RUN npm install
+RUN npm install --only=prod
+RUN cp /node_modules /node_modules_prod
+RUN npm install --only=dev
 RUN webpack --config webpack.client.config
 RUN webpack --config webpack.server.config
 
@@ -16,12 +17,11 @@ RUN webpack --config webpack.server.config
 FROM node:alpine
 
 # Copy the already built application from the intermediate container.
-COPY --from=build ./dist .
+COPY --from=build /dist .
 
-# Copy the package json from source to install runtime dependencies
-COPY package.json .
+# Copy production dependencies
+COPY --from=build /node_modules_prod /node_modules
 
-# install runtime dependencies only
-RUN npm install --production
+RUN ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
 
 ENTRYPOINT ["/bin/sh"]
