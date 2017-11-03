@@ -22,6 +22,4 @@ COPY --from=build /dist .
 # Copy production dependencies
 COPY --from=build /node_modules_prod /node_modules
 
-RUN ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
 ENTRYPOINT ["/bin/sh"]
