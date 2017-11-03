@@ -3,7 +3,7 @@ FROM node:alpine
 RUN npm install webpack -g
 RUN npm link webpack
 
-ARG NODE_ENV=production
+ARG NODE_ENV=build
 
 COPY . .
 
