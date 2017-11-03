@@ -1,4 +1,4 @@
-FROM node:alpine
+FROM node:alpine AS builder
 
 RUN npm install webpack -g
 RUN npm link webpack
@@ -17,9 +17,9 @@ RUN webpack --config webpack.server.config
 FROM node:alpine
 
 # Copy the already built application from the intermediate container.
-COPY --from=0 /dist .
+COPY --from=builder /dist .
 
 # Copy production dependencies
-COPY --from=0 /node_modules_prod /node_modules
+COPY --from=builder /node_modules_prod /node_modules
 
 ENTRYPOINT ["/bin/sh"]
