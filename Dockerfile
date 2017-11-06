@@ -4,6 +4,7 @@ ARG NODE_ENV=production
 
 WORKDIR /build
 
+# add the sources to /build
 COPY . .
 
 # install production dependencies
