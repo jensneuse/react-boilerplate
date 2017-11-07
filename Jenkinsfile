@@ -1,4 +1,4 @@
 pipeBuild {
-    author = 'Jens Neuse'
+    author = 'stroeerdigitalpublishing'
     printEnv = true
 }
